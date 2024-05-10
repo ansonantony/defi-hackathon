@@ -11,7 +11,7 @@ const AddPool = (
 
   const [poolAddress,setPoolAddress]=useState();
 
-  const [zeroAdd,setZeroAdd] = useState("0x000000000000000000000000000"));
+  const [zeroAdd,setZeroAdd] = useState("0x000000000000000000000000000");
   return <section>
     <div className="container">
       <div className="row pt80 new_addpool mb30">
@@ -26,6 +26,22 @@ const AddPool = (
 
           </header>
           {
+  poolAddress === zeroAdd ? (
+    <NoPool />
+  ) : poolAddress ? (
+    <SuccessPool poolAddress={poolAddress} />
+  ) : (
+    <PoolInput
+      notifyError={notifyError}
+      notifySuccess={notifySuccess}
+      LOAD_TOKEN={LOAD_TOKEN}
+      GET_POOL_ADDRESS={GET_POOL_ADDRESS}
+      setPoolAddress={setPoolAddress}
+    />
+  )
+}
+
+          {/* {
             poolAddress == zeroAdd ? (
               <NoPool/>
             ) : poolAddress ? (
@@ -38,7 +54,7 @@ const AddPool = (
               setPoolAddress={setPoolAddress}
               />
             )
-          }
+          } */}
         </div>
       </div>
     </div>

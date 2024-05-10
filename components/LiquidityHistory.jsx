@@ -121,8 +121,8 @@ const LiquidityHistory = ({ GET_ALL_LIQUIDITY }) => {
                         className={`value`}
                         >
                           {
-                            new Date(liquidity?.timeCreated * 1000).toDateString() );
-                          }
+  new Date(liquidity?.timeCreated * 1000).toDateString()
+}
                       </div>
                 </div>
               </td>
@@ -145,15 +145,15 @@ const LiquidityHistory = ({ GET_ALL_LIQUIDITY }) => {
                 >Hash</a>
               </td>
                   </tr>
-                // )
-              //)
+                )
+              )
               }
             </tbody>
             <tfoot>
               <tr>
                 <td colSpan={"8"}>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta esse rem earum beatae quos, dolorum sit illo similique mollitia deserunt natus sequi et ab! Illo delectus quis sequi aliquid repudiandae!
-                  
+
                 </td>
               </tr>
             </tfoot>

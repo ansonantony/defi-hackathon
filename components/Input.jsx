@@ -1,7 +1,13 @@
 import React from "react";
 
-const Input = () => {
-  return <div>Input</div>;
+const Input = ({placeholder,handleClick,value}) => {
+  return <div className="form-group label-floating is-empty">
+    <input type="text" className="form-control input-squared input--dark" id=""
+    placeholder={placeholder}
+    onChange={handleClick}
+    value= {value}
+    />
+  </div>;
 };
 
 export default Input;

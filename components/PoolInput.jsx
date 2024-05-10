@@ -1,67 +1,167 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { Input } from "./index";
 
-import {Input} from "./index"
-const PoolInput = (notifyError,
+const PoolInput = ({
+  notifyError,
   notifySuccess,
   LOAD_TOKEN,
   GET_POOL_ADDRESS,
-  setPoolAddress,) => {
-    const [token_1,setToken_1] = useState();
-    const [token_2,setToken_2] = useState();
-    const [fee,setFee] = useState();
+  setPoolAddress,
+}) => {
+  const [token_1, setToken_1] = useState();
+  const [token_2, setToken_2] = useState();
+  const [fee, setFee] = useState();
 
-    const [token_A,setToken_A] = useState();
-    const [token_B,setToken_B] = useState();
-    
-    useEffect(()=>{
-      const token = await LOAD_TOKEN(token_A);
-      if(token == undefined){
-        console.log("Kindly past the token address"):
-      } else{
-        setToken_1(token)
-      };
-      loadToken();
-    },[token_A]);
-    useEffect(()=>{
-      const token = await LOAD_TOKEN(token_B);
-      if(token == undefined){
-        console.log("Kindly past the token address"):
-      } else{
-        setToken_2(token)
-      };
-      loadToken();
-    },[token_B]);
+  const [token_A, setToken_A] = useState();
+  const [token_B, setToken_B] = useState();
 
-    const CALLING_POOL_Add = async ()=>{
-      if(!token_1 || ! !token_2 || !fee){
-
-        return notifyError("Provide all details");
-      }else{
-          const pool = await GET_POOL_ADDRESS(token_1,token_2,fee);
-          setPoolAddress(pool[0]);
+  useEffect(() => {
+    const loadToken = async () => {
+      if (token_A) {
+        const token = await LOAD_TOKEN(token_A);
+        if (!token) {
+          console.log("Kindly paste the token address");
+        } else {
+          setToken_1(token);
+        }
       }
     };
-    return (
-      
-        token_1 ? (
-          <Input value={`${token_1?.name} (${token_1?.symbol}) 
-          Bal: ${token_1?.balance.slice(0,8)}}
-          `}/>
-        ):(
-          <Input placeholder={"TokenA"} handleClick={(e) => setToken_A(e.target.value)}/>
-        )
+    loadToken();
+  }, [token_A]);
 
-        token_2 ? (
-          <Input value={`${token_2?.name} (${token_2?.symbol}) 
-          Bal: ${token_2?.balance.slice(0,8)}}
-          `}/>
-        ):(
-          <Input placeholder={"TokenA"} handleClick={(e) => setToken_A(e.target.value)}/>
-        )
+  useEffect(() => {
+    const loadToken = async () => {
+      if (token_B) {
+        const token = await LOAD_TOKEN(token_B);
+        if (!token) {
+          console.log("Kindly paste the token address");
+        } else {
+          setToken_2(token);
+        }
+      }
+    };
+    loadToken();
+  }, [token_B]);
 
-        <Input placeholder={"TokenA"} handleClick={(e) => setToken_A(e.target.value)}/>
-     
-    );
+  const CALLING_POOL_Add = async () => {
+    if (!token_1 || !token_2 || !fee) {
+      notifyError("Provide all details");
+    } else {
+      const pool = await GET_POOL_ADDRESS(token_1, token_2, fee);
+      setPoolAddress(pool[0]);
+    }
+  };
+
+  return (
+    <>
+      {token_1 ? (
+        <Input
+          value={`${token_1?.name} (${token_1?.symbol}) Bal: ${token_1?.balance.slice(0, 8)}`}
+        />
+      ) : (
+        <Input placeholder={"TokenA"} handleClick={(e) => setToken_A(e.target.value)} />
+      )}
+
+      {token_2 ? (
+        <Input
+          value={`${token_2?.name} (${token_2?.symbol}) Bal: ${token_2?.balance.slice(0, 8)}`}
+        />
+      ) : (
+        <Input placeholder={"TokenB"} handleClick={(e) => setToken_B(e.target.value)} />
+      )}
+
+      <Input placeholder={"Fee"} handleClick={(e) => setFee(e.target.value)} />
+
+      <button
+        onClick={() => CALLING_POOL_Add()}
+        className="btn btn btn--large btn--green-light btn--with-icon btn--icon-right full-width"
+      >
+        Check Pool
+        <svg className="woox-icon icon-arrow">
+          <use xlinkHref="#icon-arrow-right"></use>
+        </svg>
+      </button>
+    </>
+  );
 };
 
 export default PoolInput;
+
+// import React,{useState,useEffect} from "react";
+
+// import {Input} from "./index"
+// const PoolInput = (notifyError,
+//   notifySuccess,
+//   LOAD_TOKEN,
+//   GET_POOL_ADDRESS,
+//   setPoolAddress,) => {
+//     const [token_1,setToken_1] = useState();
+//     const [token_2,setToken_2] = useState();
+//     const [fee,setFee] = useState();
+
+//     const [token_A,setToken_A] = useState();
+//     const [token_B,setToken_B] = useState();
+    
+//     useEffect(()=>{
+//       const token = await LOAD_TOKEN(token_A);
+//       if(token == undefined){
+//         console.log("Kindly past the token address"):
+//       } else{
+//         setToken_1(token)
+//       };
+//       loadToken();
+//     },[token_A]);
+//     useEffect(()=>{
+//       const token = await LOAD_TOKEN(token_B);
+//       if(token == undefined){
+//         console.log("Kindly past the token address"):
+//       } else{
+//         setToken_2(token)
+//       };
+//       loadToken();
+//     },[token_B]);
+
+//     const CALLING_POOL_Add = async ()=>{
+//       if(!token_1 || ! !token_2 || !fee){
+
+//         return notifyError("Provide all details");
+//       }else{
+//           const pool = await GET_POOL_ADDRESS(token_1,token_2,fee);
+//           setPoolAddress(pool[0]);
+//       }
+//     };
+//     return (
+      
+//         token_1 ? (
+//           <Input value={`${token_1?.name} (${token_1?.symbol}) 
+//           Bal: ${token_1?.balance.slice(0,8)}}
+//           `}/>
+//         ):(
+//           <Input placeholder={"TokenA"} handleClick={(e) => setToken_A(e.target.value)}/>
+//         )
+
+//         token_2 ? (
+//           <Input value={`${token_2?.name} (${token_2?.symbol}) 
+//           Bal: ${token_2?.balance.slice(0,8)}}
+//           `}/>
+//         ):(
+//           <Input placeholder={"TokenA"} handleClick={(e) => setToken_A(e.target.value)}/>
+//         )
+
+//         <Input placeholder={"Fee"} handleClick={(e) => setFee(e.target.value)}/>
+        
+//         <button onClick={() => CALLING_POOL_Add()}
+//           className="btn btn btn--large btn--green-light btn--with-icon btn--icon-right full-width"
+        
+//     >
+//       Check Pool
+//       <svg className="woox-icon icon-arrow">
+//           <use xlinkHref="#icon-arrow-right">
+
+//           </use>
+//         </svg>
+//     </button>
+//     );
+// };
+
+// export default PoolInput;

@@ -2,7 +2,6 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import factoryAbi from "./factoryAbi.json";
 
-import factoryAbi from "./factoryAbi.json"
 import ERC20ABI from "./abi.json";
 
 import Woox from "./Woox.json";
